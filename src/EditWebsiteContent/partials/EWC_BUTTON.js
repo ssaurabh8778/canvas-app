@@ -10,9 +10,7 @@ import {
   AccordionDetails,
   Typography,
 } from "@material-ui/core/";
-import firebase from "firebase";
-import "firebase/firestore";
-import "firebase/auth";
+import firebase from "../../firebase";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
