@@ -14,7 +14,7 @@ import firebase from "firebase";
 import "firebase/firestore";
 import "firebase/auth";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme : Theme) =>
   createStyles({
     appBar: {
       position: "relative",

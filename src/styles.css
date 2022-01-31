@@ -1,7 +1,12 @@
+body{
+  background-color: black;
+}
+
 #root {
   background-color: black;
 }
 
 .container {
   height: calc(100vh - 20px);
+  
 }

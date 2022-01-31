@@ -63,7 +63,9 @@ let objectList = [
     url: "images/ca1.webp",
   },
 ];
+
 const typeList = [{ name: "Image" }, { name: "Video" }];
+const tagList=[{name:"category1"},{name:"category2"}];
 export default ({
   open,
   newObject,
@@ -82,8 +84,12 @@ export default ({
   const [top, setTop] = useState("");
   const [left, setLeft] = useState("");
   const [imgUrl, setImgUrl] = useState("");
+  const [imgUrl2, setImgUrl2] = useState("");
   const [type, setType] = useState("Select Type");
   const [objectId, setObjectId] = useState("");
+  const [angle, setAngle] = useState(0);
+  const [objUrl, setObjUrl] = useState('');
+  const [tag,setTag]=useState('select tag')
 
   useEffect(() => {
     setObjectId("");
@@ -107,6 +113,10 @@ export default ({
         setLeft(objectDetails.left);
         setImgUrl(objectDetails.imgUrl);
         setType(objectDetails.type);
+        setAngle(objectDetails.angle);
+        setImgUrl2(objectDetails.imgUrl2);
+        setObjUrl(objectDetails.objUrl);
+        setTag(objectDetails.tag);
       }
     }
   }, [open]);
@@ -125,6 +135,10 @@ export default ({
           top,
           left,
           imgUrl,
+          angle,
+          imgUrl2,
+          objUrl,
+          tag
         },
         (error) => {
           if (error) {
@@ -164,9 +178,30 @@ export default ({
       });
   };
 
+  const uploadImage2 = (file) => {
+    firebase
+      .storage()
+      .ref("objects/img2" + objectId)
+      .put(file)
+      .then((snapshot) => {
+        alert("Object uploaded");
+        firebase
+          .storage()
+          .ref("objects/img2" + objectId)
+          .getDownloadURL()
+          .then((url) => {
+            console.log(url);
+            setImgUrl2(url);
+          })
+          .catch((error) => {
+            alert("error");
+          });
+      });
+  };
+
   return (
     <>
-      <Dialog fullScreen open={open}>
+      <Dialog fullScreen open={open} scroll="paper"  >
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton
@@ -189,6 +224,7 @@ export default ({
             </Button>
           </Toolbar>
         </AppBar>
+
         <Select
           margin="dense"
           style={{ margin: "10px", marginTop: "25px" }}
@@ -203,6 +239,25 @@ export default ({
           autoWidth
         >
           {typeList.map((type) => (
+            <MenuItem value={type.name}>{type.name}</MenuItem>
+          ))}
+        </Select>
+
+
+        <Select
+          margin="dense"
+          style={{ margin: "10px", marginTop: "25px" }}
+          displayEmpty={true}
+          renderValue={() => {
+            return tag;
+          }}
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
+          value={tag}
+          onChange={(e) => setTag(e.target.value)}
+          autoWidth
+        >
+          {tagList.map((type) => (
             <MenuItem value={type.name}>{type.name}</MenuItem>
           ))}
         </Select>
@@ -254,29 +309,95 @@ export default ({
         <TextField
           margin="dense"
           id="outlined-basic"
+          label={"Angle"}
+          variant="outlined"
+          value={angle}
+
+          onChange={(e) => setAngle(e.target.value)}
+          className="ewc1--textInput"
+        />
+
+        <TextField
+          margin="dense"
+          id="outlined-basic"
+          label={"Object Url"}
+          variant="outlined"
+          value={objUrl}
+
+          onChange={(e) => setObjUrl(e.target.value)}
+          className="ewc1--textInput"
+        />
+
+        <TextField
+          margin="dense"
+          id="outlined-basic"
           label={"Image URL"}
           variant="outlined"
           value={imgUrl}
           onChange={(e) => setImgUrl(e.target.value)}
           className="ewc1--textInput"
         />
-        <h3>Upload Image</h3>
-        <img
-          src={imgUrl}
-          style={{
-            width: "125px",
-            height: "125px",
-            margin: "5px",
-            objectFit: "cover",
-          }}
+
+        <TextField
+          margin="dense"
+          id="outlined-basic"
+          label={"Image URL2"}
+          variant="outlined"
+          value={imgUrl2}
+          onChange={(e) => setImgUrl2(e.target.value)}
+          className="ewc1--textInput"
         />
-        <input
-          style={{
-            justifySelf: "center",
-          }}
-          type="file"
-          onChange={(e) => uploadImage(e.target.files[0])}
-        />
+        <div style={{
+          padding: 10,
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <div>
+            <h3>Upload Image</h3>
+            <img
+              src={imgUrl}
+              style={{
+                width: "125px",
+                height: "125px",
+                margin: "5px",
+                objectFit: "cover",
+              }}
+            />
+            <input
+              style={{
+                justifySelf: "center",
+
+              }}
+              type="file"
+              onChange={(e) => uploadImage(e.target.files[0])}
+            />
+          </div>
+          <div>
+            <h3>Upload Image2</h3>
+            <img
+              src={imgUrl2}
+              style={{
+                width: "125px",
+                height: "125px",
+                margin: "5px",
+                objectFit: "cover",
+              }}
+            />
+            <input
+              style={{
+                justifySelf: "center",
+
+              }}
+              type="file"
+              onChange={(e) => uploadImage2(e.target.files[0])}
+            />
+          </div>
+
+        </div>
+
+
       </Dialog>
     </>
   );

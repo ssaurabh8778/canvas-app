@@ -116,6 +116,9 @@ export default () => {
       { field: "height", sortable: true, filter: true },
       { field: "top", sortable: true, filter: true },
       { field: "left", sortable: true, filter: true },
+      {field:"objUrl",sortable:true,filter:true},
+      { field:"angle",sortable:true,filter:true},
+      {field:"tag",sortable:true,filter:true},
       { cellRenderer: "btnCellRenderer", minWidth: 150 },
     ],
     frameworkComponents: {

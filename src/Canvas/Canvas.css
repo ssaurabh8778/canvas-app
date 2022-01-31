@@ -1,7 +1,12 @@
 .canvas__container {
   background-repeat: repeat;
-}
 
+}
+/* .react-draggable {
+  transform: translate(409px, -860px) rotate(
+    45deg
+    ) !important;
+} */
 .ca1__speaker {
   width: 300px;
   position: absolute;
@@ -50,9 +55,7 @@
   left: 2000px;
 }
 
- {
-  /* Visit Store Style*/
-}
+ 
 
 a {
   position: relative;
@@ -136,6 +139,13 @@ a span:nth-child(3) {
   100% {
     right: 100%;
   }
+}
+
+img:hover {
+  scale: 1.1;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
+  z-index: 100;
+  cursor: pointer;
 }
 
 a span:nth-child(4) {

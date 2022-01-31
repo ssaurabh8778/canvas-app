@@ -9,8 +9,7 @@ export default () => {
     <div
       style={{
         width: "100vw",
-        minHeight: "100vh",
-        backgroundColor: "#f8f8f8",
+        minHeight: "100vh"
       }}
     >
       <EWC_CANVAS />
